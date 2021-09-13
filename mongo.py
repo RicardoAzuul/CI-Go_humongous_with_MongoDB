@@ -27,27 +27,35 @@ collection = connection[DATABASE][COLLECTION]
 
 # collection.insert(new_document)
 
-new_documents = [{
-    "first": "terry",
-    "last": "pratchett",
-    "dob": "28/04/1948",
-    "gender": "m",
-    "hair_color": "not much",
-    "occupation": "writer",
-    "nationality": "british"
-}, {
-    "first": "george",
-    "last": "rr martin",
-    "dob": "20/09/1948",
-    "gender": "m",
-    "hair_color": "white",
-    "occupation": "writer",
-    "nationality": "american"
-}]
+# new_documents = [{
+#     "first": "terry",
+#     "last": "pratchett",
+#     "dob": "28/04/1948",
+#     "gender": "m",
+#     "hair_color": "not much",
+#     "occupation": "writer",
+#     "nationality": "british"
+# }, {
+#     "first": "george",
+#     "last": "rr martin",
+#     "dob": "20/09/1948",
+#     "gender": "m",
+#     "hair_color": "white",
+#     "occupation": "writer",
+#     "nationality": "american"
+# }]
 
-collection.insert_many(new_documents)
+# collection.insert_many(new_documents)
 
-documents = collection.find()
+# collection.remove({ "first": "douglas"})
+
+# updates the first document it finds
+collection.update_one({ "nationality": "american" }, {"$set": {"hair_color": "maroon"}})
+
+# update all documents
+collection.update_many({ "nationality": "american" }, {"$set": {"hair_color": "maroon"}})
+
+documents = collection.find({ "nationality": "american"})
 
 for document in documents:
     print(document)
