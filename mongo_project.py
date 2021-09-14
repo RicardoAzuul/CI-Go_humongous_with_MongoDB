@@ -15,7 +15,7 @@ def mongo_connect(url):
         connection = pymongo.MongoClient(url)
         return connection
     except pymongo.errors.ConnectionFailure as e:
-        print("Could not connect to MongoDB: %s") % e
+        print("ERROR: Could not connect to MongoDB: %s") % e
 
 
 def show_menu():
@@ -30,11 +30,40 @@ def show_menu():
     return option
 
 
+def add_record():
+    print("")
+    first = input("Enter first name > ")
+    last = input("Enter last name > ")
+    dob = input("Enter date of birth > ")
+    gender = input("Enter gender > ")
+    hair_color = input("Enter hair color > ")
+    occupation = input("Enter occcupation > ")
+    nationality = input("Enter nationality > ")
+
+    new_document = {
+        "first": first.lower(),
+        "last": last.lower(),
+        "dob": dob,
+        "gender": gender.lower(),
+        "hair_color": hair_color.lower(),
+        "occupation": occupation.lower(),
+        "nationality": nationality.lower()
+    }
+
+    try:
+        collection.insert_one(new_document)
+        print("")
+        print("INFO: Document inserted")
+    except:
+        print("ERROR: Error accessing the database")
+
+
+
 def main_loop():
     while True:
         option = show_menu()
         if option == "1":
-            print("You have selected option 1")
+            add_record()
         elif option == "2":
             print("You have selected option 2")        
         elif option == "3":
