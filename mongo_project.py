@@ -30,6 +30,23 @@ def show_menu():
     return option
 
 
+def get_record():
+    print("")
+    first = input("Enter first name > ")
+    last = input("Enter last name > ")
+
+    try:
+        document = collection.find_one({ "first": first.lower(), "last": last.lower() }) 
+    except:
+        print("ERROR: Error accessing the database")
+
+    if not document:
+        print("")
+        print("WARNING: No results found!")
+
+    return document
+
+
 def add_record():
     print("")
     first = input("Enter first name > ")
@@ -58,6 +75,14 @@ def add_record():
         print("ERROR: Error accessing the database")
 
 
+def find_record():
+    document = get_record()
+    if document:
+        print("")
+        for key, value in document.items():
+            if key != "_id":
+                print(key.capitalize() + ": " + value.capitalize())
+
 
 def main_loop():
     while True:
@@ -65,7 +90,7 @@ def main_loop():
         if option == "1":
             add_record()
         elif option == "2":
-            print("You have selected option 2")        
+            find_record()       
         elif option == "3":
             print("You have selected option 3")
         elif option == "4":
